@@ -1,0 +1,9 @@
+CREATE DATABASE IF NOT EXISTS cardtopia_db
+  CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+CREATE USER IF NOT EXISTS 'cardtopia_app'@'localhost'
+  IDENTIFIED BY 'CHANGE_ME_LOCALLY';
+ALTER USER 'cardtopia_app'@'localhost'
+  IDENTIFIED BY 'CHANGE_ME_LOCALLY';
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX, REFERENCES
+  ON cardtopia_db.* TO 'cardtopia_app'@'localhost';
+FLUSH PRIVILEGES;
