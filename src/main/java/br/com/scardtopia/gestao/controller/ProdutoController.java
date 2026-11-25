@@ -25,7 +25,7 @@ public class ProdutoController {
 
     @InitBinder
     public void bindPreco(WebDataBinder binder) {
-        // HTML type=number envia decimal com ponto; aceitar tambem virgula no formulario.
+        // HTML type=number envia decimal com ponto; aceitar também vírgula no formulário.
         binder.registerCustomEditor(BigDecimal.class, "preco", new PropertyEditorSupport() {
             @Override public void setAsText(String valor) {
                 if (valor == null || valor.isBlank()) { setValue(null); return; }
@@ -53,7 +53,7 @@ public class ProdutoController {
     @GetMapping("/{id}/editar")
     public String editar(@PathVariable Long id, Model model, RedirectAttributes flash) {
         var p = produtos.findById(id);
-        if (p.isEmpty()) { flash.addFlashAttribute("erro", "Produto nao encontrado."); return "redirect:/produtos"; }
+        if (p.isEmpty()) { flash.addFlashAttribute("erro", "Produto não encontrado."); return "redirect:/produtos"; }
         model.addAttribute("pagina", "produtos");
         model.addAttribute("produto", p.get());
         return "produtos/form";
@@ -67,9 +67,9 @@ public class ProdutoController {
             produto.setCodigo(produto.getCodigo().trim().toUpperCase());
             boolean duplicado = produto.getId() == null ? produtos.existsByCodigoIgnoreCase(produto.getCodigo()) :
                 produtos.existsByCodigoIgnoreCaseAndIdNot(produto.getCodigo(), produto.getId());
-            if (duplicado) resultado.rejectValue("codigo", "duplicado", "Este codigo ja esta cadastrado.");
+            if (duplicado) resultado.rejectValue("codigo", "duplicado", "Este código já está cadastrado.");
             if (produto.getId() != null && !produtos.existsById(produto.getId())) {
-                resultado.reject("invalido", "Produto nao encontrado para edicao.");
+                resultado.reject("invalido", "Produto não encontrado para edição.");
             }
         }
         if (resultado.hasErrors()) return "produtos/form";
@@ -81,10 +81,10 @@ public class ProdutoController {
     @PostMapping("/{id}/excluir")
     public String excluir(@PathVariable Long id, RedirectAttributes flash) {
         if (vendas.existsByProdutoId(id)) {
-            flash.addFlashAttribute("erro", "Nao e possivel excluir produto com vendas vinculadas.");
+            flash.addFlashAttribute("erro", "Não é possível excluir produto com ordens vinculadas.");
         } else if (produtos.existsById(id)) {
             produtos.deleteById(id);
-            flash.addFlashAttribute("sucesso", "Produto excluido.");
+            flash.addFlashAttribute("sucesso", "Produto excluído.");
         }
         return "redirect:/produtos";
     }

@@ -1,6 +1,6 @@
 # Spencer's Cardtopia | Sistema de Gestão
 
-Projeto acadêmico completo, com CRUD de **produtos, clientes e vendas**,
+Projeto acadêmico completo, com CRUD de **produtos, clientes e ordens**,
 dashboard, controle de estoque e autenticação, desenvolvido em **Java 25 LTS,
 Spring Boot 4.2.0, Thymeleaf, HTML/CSS/JS e banco local XAMPP (MariaDB/MySQL)**.
 
@@ -21,6 +21,10 @@ Spring Boot 4.2.0, Thymeleaf, HTML/CSS/JS e banco local XAMPP (MariaDB/MySQL)**.
 4. Confira se `cardtopia_db` aparece na lateral.
 5. As tabelas `produtos`, `clientes` e `vendas` serão criadas pelo Hibernate
    na **primeira execução do Java**.
+
+Após iniciar a aplicação uma vez para criar as tabelas, execute
+`database/dados_exemplo.sql` no phpMyAdmin para inserir os produtos, cinco
+clientes e três ordens de teste.
 
 O SQL cria o usuário local `cardtopia_app` e concede permissões apenas ao banco
 do projeto. Antes de executar o script, substitua `CHANGE_ME_LOCALLY` por uma
@@ -58,8 +62,8 @@ mvn spring-boot:run
 
 ## 4. Painel principal
 
-O dashboard exibe o total de produtos, clientes e vendas cadastrados, além das
-cinco vendas mais recentes.
+O dashboard exibe o total de produtos, clientes e ordens cadastrados, além das
+cinco ordens mais recentes.
 
 ## 5. Mapa dos arquivos
 
@@ -78,11 +82,12 @@ src/main/resources/
   templates/fragments/base.html
   templates/{produtos,clientes,vendas}/{lista,form}.html
   static/{css/app.css,js/app.js}
-database/01_criar_banco.sql
+database/banco.sql
+database/dados_exemplo.sql
 src/test/java/.../service/VendaServiceTest.java
 ```
 
-**Arquitetura MVC:** Browser -> Controller -> Service (regras de vendas) ->
+**Arquitetura MVC:** Browser -> Controller -> Service (regras de ordens) ->
 Repository (Spring Data JPA) -> MySQL/MariaDB. Thymeleaf renderiza o HTML no
 servidor.
 
@@ -109,16 +114,16 @@ perfis adicionais, pagamentos reais ou rotina fiscal.
 
 - **Produto**: nome, SKU único, categoria, edição, Foil, preço e saldo de estoque.
 - **Cliente**: nome, e-mail único, telefone.
-- **Venda**: associa **um único produto** a um cliente e quantidade. `PENDENTE`
+- **Ordem**: associa **um único produto** a um cliente e quantidade. `PENDENTE`
   ou `CONFIRMADA` reserva estoque. `CANCELADA` libera reserva. O preço de cada
-  venda é gravado como retrato do preço do produto no momento de salvar/editar.
+  ordem é gravado como retrato do preço do produto no momento de salvar/editar.
 - **Dashboard**: somente `CONFIRMADA` entra na receita confirmada; produtos
   com até três unidades aparecem como estoque baixo.
-- **Exclusão de venda**: reverte reserva se a venda estava pendente/confirmada.
-  Produtos/clientes vinculados a vendas não podem ser excluídos.
+- **Exclusão de ordem**: reverte reserva se a ordem estava pendente/confirmada.
+  Produtos/clientes vinculados a ordens não podem ser excluídos.
 - **Escopo acadêmico**: não contempla múltiplos itens por pedido, frete,
   imposto, cupom, parcelamento, NF-e, pagamento ou integração com o site de
-  vendas da loja. Pode ser ampliado posteriormente.
+  e-commerce da loja. Pode ser ampliado posteriormente.
 
 Fontes técnicas: [Spring Boot](https://docs.spring.io/spring-boot/3.5/),
 [Spring Security](https://docs.spring.io/spring-security/reference/),

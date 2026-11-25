@@ -40,7 +40,7 @@ public class ClienteController {
     @GetMapping("/{id}/editar")
     public String editar(@PathVariable @NonNull Long id, Model model, RedirectAttributes flash) {
         var c = clientes.findById(id);
-        if (c.isEmpty()) { flash.addFlashAttribute("erro", "Cliente nao encontrado."); return "redirect:/clientes"; }
+        if (c.isEmpty()) { flash.addFlashAttribute("erro", "Cliente não encontrado."); return "redirect:/clientes"; }
         model.addAttribute("pagina", "clientes");
         model.addAttribute("cliente", c.get());
         return "clientes/form";
@@ -54,9 +54,9 @@ public class ClienteController {
             cliente.setEmail(cliente.getEmail().trim().toLowerCase());
             boolean duplicado = cliente.getId() == null ? clientes.existsByEmailIgnoreCase(cliente.getEmail()) :
                 clientes.existsByEmailIgnoreCaseAndIdNot(cliente.getEmail(), cliente.getId());
-            if (duplicado) resultado.rejectValue("email", "duplicado", "Este e-mail ja esta cadastrado.");
+            if (duplicado) resultado.rejectValue("email", "duplicado", "Este e-mail já está cadastrado.");
             if (cliente.getId() != null && !clientes.existsById(cliente.getId())) {
-                resultado.reject("invalido", "Cliente nao encontrado para edicao.");
+                resultado.reject("invalido", "Cliente não encontrado para edição.");
             }
         }
         if (resultado.hasErrors()) return "clientes/form";
@@ -68,10 +68,10 @@ public class ClienteController {
     @PostMapping("/{id}/excluir")
     public String excluir(@PathVariable @NonNull Long id, RedirectAttributes flash) {
         if (vendas.existsByClienteId(id)) {
-            flash.addFlashAttribute("erro", "Nao e possivel excluir cliente com vendas vinculadas.");
+            flash.addFlashAttribute("erro", "Não é possível excluir cliente com ordens vinculadas.");
         } else if (clientes.existsById(id)) {
             clientes.deleteById(id);
-            flash.addFlashAttribute("sucesso", "Cliente excluido.");
+            flash.addFlashAttribute("sucesso", "Cliente excluído.");
         }
         return "redirect:/clientes";
     }

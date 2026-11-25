@@ -56,7 +56,7 @@ public class VendaController {
         if (resultado.hasErrors()) { preencherOpcoes(model); return "vendas/form"; }
         try {
             servico.salvar(form);
-            flash.addFlashAttribute("sucesso", "Venda salva e estoque atualizado.");
+            flash.addFlashAttribute("sucesso", "Ordem salva e estoque atualizado.");
             return "redirect:/vendas";
         } catch(RegraNegocioException ex) {
             model.addAttribute("erro", ex.getMessage());
@@ -69,7 +69,7 @@ public class VendaController {
     public String excluir(@PathVariable Long id, RedirectAttributes flash) {
         try {
             servico.excluir(id);
-            flash.addFlashAttribute("sucesso", "Venda excluida. Estoque recomposto, quando aplicavel.");
+            flash.addFlashAttribute("sucesso", "Ordem excluída. Estoque recomposto, quando aplicável.");
         } catch(RegraNegocioException ex) {
             flash.addFlashAttribute("erro", ex.getMessage());
         }

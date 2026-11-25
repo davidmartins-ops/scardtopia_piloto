@@ -4,7 +4,7 @@
 <div class="login-panel">
   <div class="login-badge">SC</div><div class="eyebrow">PAINEL ADMINISTRATIVO</div>
   <h1>Bem-vindo à<br/><em>Cardtopia.</em></h1>
-  <p>Gestão de produtos, clientes e vendas em um só lugar.</p>
+  <p>Gestão de produtos, clientes e ordens em um só lugar.</p>
   <div th:if="${param.error}" class="notice error">Usuário ou senha inválidos.</div>
   <div th:if="${param.logout}" class="notice success">Sua sessão foi encerrada.</div>
   <form th:action="@{/login}" method="post" class="login-form">

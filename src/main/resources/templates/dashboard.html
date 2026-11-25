@@ -3,19 +3,19 @@
 <body><aside th:replace="~{fragments/base :: sidebar}"></aside><main class="workspace">
   <div class="topbar"><span>PAINEL ADMINISTRATIVO <b>/ DASHBOARD</b></span><div class="topbar-user">ADMIN <span class="avatar">A</span></div></div>
   <div th:replace="~{fragments/base :: notificacoes}"></div>
-  <section class="hero"><div><div class="eyebrow">OVERVIEW / GESTÃO</div><h1>Controle que transforma<br/><em>o seu negócio.</em></h1><p>Acompanhe os principais números da Spencer’s Cardtopia.</p></div><a th:href="@{/vendas/nova}" class="btn primary">+ Registrar venda</a></section>
+  <section class="hero"><div><div class="eyebrow">OVERVIEW / GESTÃO</div><h1>Controle que transforma<br/><em>o seu negócio.</em></h1><p>Acompanhe os principais números da Spencer’s Cardtopia.</p></div><a th:href="@{/vendas/nova}" class="btn primary">+ Registrar ordem</a></section>
   <div class="section-kicker">INDICADORES PRINCIPAIS</div>
   <section class="stats">
     <div class="stat"><span>PRODUTOS CADASTRADOS</span><strong th:text="${totalProdutos}">0</strong><small>Itens registrados no catálogo</small></div>
     <div class="stat"><span>CLIENTES CADASTRADOS</span><strong th:text="${totalClientes}">0</strong><small>Base de relacionamento</small></div>
-    <div class="stat"><span>VENDAS REGISTRADAS</span><strong th:text="${totalVendas}">0</strong><small>Todos os status de pedido</small></div>
+    <div class="stat"><span>ORDENS REGISTRADAS</span><strong th:text="${totalVendas}">0</strong><small>Todos os status de pedido</small></div>
     <div class="stat alert"><span>ESTOQUE BAIXO</span><strong th:text="${estoqueBaixo}">0</strong><small>Produtos com até 3 unidades</small></div>
   </section>
-  <section class="metric-banner"><div><div class="eyebrow">RECEITA CONFIRMADA</div><strong th:text="'R$ ' + ${#numbers.formatDecimal(faturamento, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</strong><p>Total das vendas com status CONFIRMADA</p></div><span class="metric-mark">↗</span></section>
-  <section class="panel"><div class="panel-head"><div><div class="section-kicker">MOVIMENTAÇÕES</div><h2>Últimas vendas</h2></div><a class="text-link" th:href="@{/vendas}">Ver todas ↗</a></div>
+  <section class="metric-banner"><div><div class="eyebrow">RECEITA CONFIRMADA</div><strong th:text="'R$ ' + ${#numbers.formatDecimal(faturamento, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</strong><p>Total das ordens com status CONFIRMADA</p></div><span class="metric-mark">↗</span></section>
+  <section class="panel"><div class="panel-head"><div><div class="section-kicker">MOVIMENTAÇÕES</div><h2>Últimas ordens</h2></div><a class="text-link" th:href="@{/vendas}">Ver todas ↗</a></div>
     <div class="table-wrap"><table><thead><tr><th>CLIENTE</th><th>PRODUTO</th><th>QTD.</th><th>TOTAL</th><th>STATUS</th></tr></thead><tbody>
       <tr th:each="v : ${ultimasVendas}"><td th:text="${v.cliente.nome}">Cliente</td><td th:text="${v.produto.nome}">Produto</td><td th:text="${v.quantidade}">1</td><td th:text="'R$ ' + ${#numbers.formatDecimal(v.total, 1, 'POINT', 2, 'COMMA')}">R$ 0,00</td><td><span class="pill" th:classappend="${v.status.name().toLowerCase()}" th:text="${v.status}">PENDENTE</span></td></tr>
-      <tr th:if="${#lists.isEmpty(ultimasVendas)}"><td colspan="5" class="empty">Nenhuma venda registrada. Comece cadastrando clientes e produtos.</td></tr>
+      <tr th:if="${#lists.isEmpty(ultimasVendas)}"><td colspan="5" class="empty">Nenhuma ordem registrada. Comece cadastrando clientes e produtos.</td></tr>
     </tbody></table></div>
   </section>
   <footer class="app-footer">SPENCER’S CARDTOPIA <span>GESTÃO INTERNA · 2026</span></footer>

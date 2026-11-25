@@ -20,26 +20,26 @@ public class VendaService {
     @Transactional
     public Venda salvar(VendaForm form) {
         if (form.getQuantidade() == null || form.getQuantidade() < 1 || form.getStatus() == null) {
-            throw new RegraNegocioException("Quantidade e status obrigatorios.");
+            throw new RegraNegocioException("Quantidade e status obrigatórios.");
         }
         Venda venda = form.getId() == null ? new Venda() : vendas.findById(form.getId())
-            .orElseThrow(() -> new RegraNegocioException("Venda nao encontrada."));
+            .orElseThrow(() -> new RegraNegocioException("Ordem não encontrada."));
 
-        // Recuperar saldo antigo antes de recalcular a venda; rollback automatico se falhar.
+        // Recuperar saldo antigo antes de recalcular a venda; rollback automático se falhar.
         if (venda.getId() != null && venda.getStatus() != StatusVenda.CANCELADA) {
             Produto anterior = produtos.buscarParaAtualizar(venda.getProduto().getId())
-                .orElseThrow(() -> new RegraNegocioException("Produto anterior nao encontrado."));
+                .orElseThrow(() -> new RegraNegocioException("Produto anterior não encontrado."));
             anterior.setEstoque(anterior.getEstoque() + venda.getQuantidade());
         }
         Produto produto = produtos.buscarParaAtualizar(form.getProdutoId())
-            .orElseThrow(() -> new RegraNegocioException("Produto nao encontrado."));
+            .orElseThrow(() -> new RegraNegocioException("Produto não encontrado."));
         Cliente cliente = clientes.findById(form.getClienteId())
-            .orElseThrow(() -> new RegraNegocioException("Cliente nao encontrado."));
+            .orElseThrow(() -> new RegraNegocioException("Cliente não encontrado."));
 
-        // PENDENTE reserva estoque; CONFIRMADA mantem reserva; CANCELADA libera estoque.
+        // PENDENTE reserva estoque; CONFIRMADA mantém reserva; CANCELADA libera estoque.
         if (form.getStatus() != StatusVenda.CANCELADA) {
             if (produto.getEstoque() < form.getQuantidade()) {
-                throw new RegraNegocioException("Estoque insuficiente: disponiveis " + produto.getEstoque() + " unidade(s).");
+                throw new RegraNegocioException("Estoque insuficiente: disponíveis " + produto.getEstoque() + " unidade(s).");
             }
             produto.setEstoque(produto.getEstoque() - form.getQuantidade());
         }
@@ -54,10 +54,10 @@ public class VendaService {
 
     @Transactional
     public void excluir(Long id) {
-        Venda venda = vendas.findById(id).orElseThrow(() -> new RegraNegocioException("Venda nao encontrada."));
+        Venda venda = vendas.findById(id).orElseThrow(() -> new RegraNegocioException("Ordem não encontrada."));
         if (venda.getStatus() != StatusVenda.CANCELADA) {
             Produto produto = produtos.buscarParaAtualizar(venda.getProduto().getId())
-                .orElseThrow(() -> new RegraNegocioException("Produto nao encontrado."));
+                .orElseThrow(() -> new RegraNegocioException("Produto não encontrado."));
             produto.setEstoque(produto.getEstoque() + venda.getQuantidade());
         }
         vendas.delete(venda);
@@ -65,7 +65,7 @@ public class VendaService {
 
     @Transactional(readOnly=true)
     public VendaForm criarFormParaEdicao(Long id) {
-        Venda venda = vendas.findById(id).orElseThrow(() -> new RegraNegocioException("Venda nao encontrada."));
+        Venda venda = vendas.findById(id).orElseThrow(() -> new RegraNegocioException("Ordem não encontrada."));
         VendaForm form = new VendaForm();
         form.setId(venda.getId());
         form.setClienteId(venda.getCliente().getId());
