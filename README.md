@@ -56,20 +56,10 @@ $env:DB_PASSWORD="SuaSenhaDoBancoAqui"
 mvn spring-boot:run
 ```
 
-## 4. Ordem para demonstrar em sala
+## 4. Painel principal
 
-1. Fazer login.
-2. Cadastrar um produto "Secret Lair x Dune: Spice", SKU `DUNE-SPICE-F`,
-   edição "My Arrakis, My Superdrop", acabamento Foil, preço `450.00`,
-   estoque `5`.
-3. Cadastrar um cliente fictício.
-4. Registrar venda PENDENTE de 2 unidades: estoque passa de 5 para 3; valor
-   calculado R$ 900,00.
-5. Confirmar a venda: estoque permanece em 3; dashboard exibe receita confirmada.
-6. Cancelar a venda: estoque retorna a 5.
-7. Demonstrar bloqueio ao tentar vender 10 unidades sem estoque.
-8. Demonstrar validação de campos e proteção de exclusão de registros com
-   histórico de vendas.
+O dashboard exibe o total de produtos, clientes e vendas cadastrados, além das
+cinco vendas mais recentes.
 
 ## 5. Mapa dos arquivos
 
