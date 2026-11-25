@@ -130,34 +130,6 @@ perfis adicionais, pagamentos reais ou rotina fiscal.
   imposto, cupom, parcelamento, NF-e, pagamento ou integração com o site de
   vendas da loja. Pode ser ampliado posteriormente.
 
-## 8. Testes
-
-```powershell
-mvn test
-```
-
-`VendaServiceTest` contempla reserva de estoque, bloqueio por saldo
-insuficiente, cancelamento e reposição após exclusão. Consulte
-`documentacao/PLANO_DE_TESTES.md` para validação manual no XAMPP.
-**O projeto deve ser testado no seu computador com XAMPP antes de apresentar
-prints como evidências de execução.**
-
-## 9. Solução de problemas comuns
-
-- **`MySQL shutdown unexpectedly` no XAMPP:** consulte
-  `Logs > mysql_error.log`, verifique conflito na porta 3306 no Windows
-  (`netstat -ano | findstr :3306`) e se já existe outro serviço
-  MySQL/MariaDB. Não apague a pasta `mysql/data` nem substitua arquivos de
-  banco sem backup.
-- **`Access denied for user cardtopia_app`**: reexecute o SQL com conta
-  administrativa, confira as credenciais e o host do usuário.
-- **`Unknown database 'cardtopia_db'`**: rode o SQL antes de iniciar o Java.
-- **`Port 8080 was already in use`**: encerre a outra aplicação ou altere `server.port`.
-- **`mvn não é reconhecido`**: instale Maven e adicione sua pasta `bin` ao
-  `PATH`.
-- **Erro ao salvar produto em vendas**: não é permitido excluir produto/cliente
-  com histórico de venda; edite ou mantenha o registro.
-
 Fontes técnicas: [Spring Boot](https://docs.spring.io/spring-boot/3.5/),
 [Spring Security](https://docs.spring.io/spring-security/reference/),
 [Thymeleaf](https://www.thymeleaf.org/documentation.html) e
