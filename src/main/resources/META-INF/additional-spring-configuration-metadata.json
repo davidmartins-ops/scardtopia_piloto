@@ -1,0 +1,16 @@
+{
+  "properties": [
+    {
+      "name": "app.admin.username",
+      "type": "java.lang.String",
+      "description": "Username for the local administrator account.",
+      "sourceType": "br.com.scardtopia.gestao.config.SecurityConfig"
+    },
+    {
+      "name": "app.admin.password",
+      "type": "java.lang.String",
+      "description": "Password for the local administrator account.",
+      "sourceType": "br.com.scardtopia.gestao.config.SecurityConfig"
+    }
+  ]
+}
